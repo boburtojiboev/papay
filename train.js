@@ -9,7 +9,7 @@ console.log(arr);
 
 
 
-
+ 
 
 // let a = array.shift();
 // console.log(a)
