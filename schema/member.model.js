@@ -81,7 +81,7 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: 0
     }, 
-    {timestamt: true}
+    {timestamps: true}
 });
 
 module.exports = mongoose.model("Member", memberSchema);
