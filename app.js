@@ -5,8 +5,8 @@ const router = require("./router");
 
 
 // MongoDB chaqirish
-const db = require("./server").db();
-const mongodb = require("mongodb");
+// const db = require("./server").db();
+// const mongodb = require("mongodb");
 
 // 1 Kirish code lar
 app.use(express.static("public"));
