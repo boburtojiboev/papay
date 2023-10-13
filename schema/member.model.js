@@ -57,7 +57,7 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: 'N',
         enum: {
-            values: ordinary_enums,
+            values: ordenary_enums,
             message: "{VALUE} is not among permitted values"
         }
     },
@@ -81,7 +81,7 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: 0
     }, 
-    {timestamps: true},
+    {timestamt: true}
 });
 
-module.exports = mongoose.model("Member", memberSchema)
+module.exports = mongoose.model("Member", memberSchema);
