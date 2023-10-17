@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { member_status_enums, member_type_enums } = require("../lib/config");
+const { member_status_enums, member_type_enums, ordenary_enums } = require("../lib/config");
 
 const memberSchema = new mongoose.Schema({
     mb_nick: {
@@ -9,7 +9,8 @@ const memberSchema = new mongoose.Schema({
     },
     mb_phone: {
         type: String,
-        required: true
+        required: true,
+        index: {unique: true, sparse: true}
     },
     mb_password: {
         type: String,
@@ -81,7 +82,9 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: 0
     }, 
+    
+}, 
     {timestamps: true}
-});
+);
 
 module.exports = mongoose.model("Member", memberSchema);
