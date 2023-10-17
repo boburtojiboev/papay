@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { member_status_enums, member_type_enums, ordenary_enums } = require("../lib/config");
+const { member_status_enums, member_type_enums, ordernary_enums } = require("../lib/config");
 
 const memberSchema = new mongoose.Schema({
     mb_nick: {
@@ -58,7 +58,7 @@ const memberSchema = new mongoose.Schema({
         required: false,
         default: 'N',
         enum: {
-            values: ordenary_enums,
+            values: ordernary_enums,
             message: "{VALUE} is not among permitted values"
         }
     },
