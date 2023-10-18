@@ -6,7 +6,7 @@ const restaurantController = require("./controllers/restaurantController");
  *         BSSR EJS             *
  ********************************/
 
-router_bssr.get("/signup", restaurantController.getSignuoMyRestaurant);
+router_bssr.get("/signup", restaurantController.getSignupMyRestaurant);
 router_bssr.post("/signup", restaurantController.signupProcess);
 
 router_bssr.get("/login", restaurantController.getLoginMyRestaurant);

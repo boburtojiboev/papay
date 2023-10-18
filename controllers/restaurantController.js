@@ -2,7 +2,7 @@ const Member = require("../models/Member");
 
 let restaurantController = module.exports;
 
-restaurantController.getSignuoMyRestaurant = async (req, res) => {
+restaurantController.getSignupMyRestaurant = async (req, res) => {
     try {
         console.log("GET: cont/getSignUpMyRestautant");
         res.render("signup");
@@ -48,6 +48,8 @@ restaurantController.loginProcess = async (req, res) => {
         // console.log("body:::", req.body);
         member = new Member(),
         result = await member.loginData(data);
+
+        // SESSION
 
         res.json({state: 'succeed', data: result});
     } catch(err){
