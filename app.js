@@ -2,7 +2,8 @@ console.log("Web Serverni boshlash");
 const express = require("express");
 const app = express();
 const router = require("./router");
-const router_bssr = require("./router_bssr");
+const router_bssr = require("./router_bssr")
+// const router_bssr = require("./router_bssr");
 
 let session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session); 
