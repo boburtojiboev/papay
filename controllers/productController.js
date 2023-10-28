@@ -21,6 +21,7 @@ productController.addNewProduct = async (req, res) => {
 
     const product = new Product();
     let data = req.body;
+    // console.log(data.product_images);
 
     data.product_images = req.files.map((ele) => {
       return ele.path;
@@ -43,6 +44,7 @@ productController.updateChosenProduct = async (req, res) => {
     console.log("POST: cont/updateChosenProduct");
     const product = new Product();
     const id = req.params.id;
+    // console.log(id);
     const result = await product.updateChosenProductData(
       id, 
       req.body, 
