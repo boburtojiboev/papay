@@ -18,7 +18,7 @@ restaurantController.home = (req, res) => {
 restaurantController.getMyRestaurantProduct = async (req, res) => {
   try {
     console.log("GET: cont/getMyRestaurantProduct");
-    // todo get my res product
+  
     const product = new Product();
     const data = await product.getAllProductDataResto(res.locals.member);
 
