@@ -53,7 +53,7 @@ restaurantController.signupProcess = async (req, res) => {
     res.redirect("/resto/products/menu");
   } catch (err) {
     console.log(`ERROR, cont/signupProcess, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto/login");
   }
 };
 
@@ -73,8 +73,8 @@ restaurantController.loginProcess = async (req, res) => {
 
     const data = req.body;
     // console.log("body:::", req.body); //restaran productlarni consoleda korsatadi//
-    (member = new Member()), 
-    (result = await member.loginData(data));
+   const member = new Member(); 
+   const result = await member.loginData(data);
 
     req.session.member = result;
     req.session.save(function () {
@@ -84,7 +84,7 @@ restaurantController.loginProcess = async (req, res) => {
     });
   } catch (err) {
     console.log(`ERROR, cont/loginProcess, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto/login");
   }
 };
 
