@@ -15,7 +15,7 @@ class Member {
             input.mb_password = await bcrypt.hash(input.mb_password, salt);
             const new_member = new this.memberModel(input);
 
-            let result
+            let result;
             try {
                 result = await new_member.save(); 
             } catch(mango_err){
