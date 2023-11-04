@@ -40,9 +40,9 @@
                                 <td><%- value.product_price %></td>
                                 <td><%- value.product_left_cnt %></td>
                                 <td>
-                                    <select class="spec_select new_product_status" id="<%- value._id %>">
-                                        <option value="PAUSED" <%- value.product_status == "PAUSED" ? "selected": " " %> >PAUSED</option>
-                                        <option value="PROCESS" <%- value.product_status == "PROCESS" ? "selected": " " %> >PROCESS</option>
+                                    <select class="spec_select new_product_status" id="<%= value._id %>">
+                                        <option value="PAUSED" <%= value.product_status == "PAUSED" ? "selected": " " %> >PAUSED</option>
+                                        <option value="PROCESS" <%= value.product_status == "PROCESS" ? "selected": " " %> >PROCESS</option>
                                     </select>
                                 </td>
                             </tbody>
@@ -177,15 +177,18 @@
                 });
 
                 //product status changer yani proccess or paused qilish uchun//
-                $(".new_product_status").on("change", async(e)=>{
+                $(".new_product_status").on("change", async function(e) {
                     const id = e.target.id;
                     const product_status = $(`#${id}.new_product_status`).val();
-                    const mb_id = `<%- member._id%>`;
+                    const mb_id = `<%= member._id%>`;
                     try{
-                        const url = `/resto/products/edit/${id}`
-                        const response= await axios.post(url,
-                         {id: id, product_status: product_status});
+                        const url = `/resto/products/edit/${id}`;
+                        const response= await axios.post(url, 
+                        {id: id, product_status: product_status});
                         const result = response.data;
+                        // brawser consolida korish uchun//
+                         console.log("response:", response);
+                         console.log("url", url); 
                         console.log("result:", result);
 
                         if(result.state == "success"){

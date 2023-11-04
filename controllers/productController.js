@@ -37,7 +37,7 @@ productController.addNewProduct = async (req, res) => {
   } catch (err) {
     console.log(`ERROR, cont/addNewProduct, ${err.message}`);
   }
-};
+}; 
 
 productController.updateChosenProduct = async (req, res) => {
   try {
