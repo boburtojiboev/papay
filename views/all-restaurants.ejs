@@ -6,60 +6,61 @@
     <div class="group_name">
       <ul class="nav justify-content-center">
         <li class="nav-item" style="cursor: pointer">
-          <a class="nav-link active" href="/resto">Home</a>
+            <a class="nav-link active" href="/resto">Home</a>
         </li>
         <li class="nav-item" style="cursor: pointer">
-          <a class="nav-link" href="/resto/all-restaurant">All Resto</a>
+            <a class="nav-link" href="/resto/all-restaurant">All Resto</a>
         </li>
-        <li
-          class="nav-item"
-          style="cursor: pointer"
-          onclick="return confirm('Do you want to logout?')"
-        >
-          <a class="nav-link" href="/resto/logout">Logout</a>
+        <li class="nav-item" style="cursor: pointer"
+        onclick="return confirm('Do you want to logout?')">
+          <a class="nav-link active" href="/resto/logout">Logout</a>
         </li>
       </ul>
     </div>
-
     <div class="restaurant_menu_frame">
       <div class="restaurant_container">
         <div class="resto_table">
-          <span class="new_dish_txt"> Barcha Oshxonalar Ro'yhati</span>
+          <span class="new_dish_txt">Barcha Oshxonalar Ro'yhati</span>
+
           <table class="table table-hover table-sm">
             <thead class="thead-light">
               <tr class="thead-light">
                 <th scope="col">T/r</th>
-                <th scope="col">Oshxona Nomi</th>
-                <th scope="col">Oshxona Telefon Raqami</th>
+                <th scope="col">Oshxona nomi</th>
+                <th scope="col">Oshxona telefon raqami</th>
                 <th scope="col">Oshxona Top</th>
                 <th scope="col">Oshxona Holati</th>
               </tr>
             </thead>
 
-            <tbody style="background-color: #fff">
+            <tbody style="background-color: #ffffff">
               <td>1</td>
-              <td>Texas De Brazil</td>
-              <td>998999059999</td>
+              <td>Texas De Brazill</td>
+              <td>998999059949</td>
               <td style="width: 13%">
-                <label class="slider">
-                  <input type="checkbox" class="mb_top" />
-                  <span class="slider-switch around"></span>
+                <label class="switch">
+                  <input class="mb_top" type="checkbox" />
+                  <span class="slider around"></span>
                 </label>
               </td>
+
               <td style="width: 13%">
-                <select class="spec_select mb_status" name="" id="">
+                <select class="spec_select mb_status">
                   <option value="ONPAUSE">ONPAUSE</option>
                   <option value="ACTIVE">ACTIVE</option>
                   <option value="DELETED">DELETED</option>
                 </select>
               </td>
             </tbody>
+
+            
           </table>
         </div>
       </div>
     </div>
   </div>
 </body>
+
 
 
 <%- include('includes/footer') %>
