@@ -89,20 +89,21 @@
 }
 
  .slider input:checked + .slider-switch {
-  background: #ffffff;
-}
- .slider input:focus + .slider-switch {
+  background: #2196f3;
+} 
+
+.slider input:focus + .slider-switch {
   box-shadow: 0 0 1px #2196f3;
 }
 
 .slider input:checked + .slider-switch:before {
-  content: "";
+  /* content: "";
   position: absolute;
   height: 14px;
   width: 14px;
   left: 6px;
-  bottom: 3.5px;
-  background: #2196f3;
+  bottom: 3.5px; */
+  background: #ffffff;
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
