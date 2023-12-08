@@ -49,11 +49,11 @@ class Order {
       });
       const result = await new_order.save();
       assert.ok(result, Definer.order_err1);
-        console.log("result:::", result);
+      console.log("result:::", result);
 
       return result._id;
     } catch (err) {
-        console.log(err);
+      console.log(err);
       throw new Error(Definer.order_err1);
     }
   }
@@ -88,6 +88,44 @@ class Order {
       return "inserted";
     } catch (err) {
       throw new Error(Definer.order_err2);
+    }
+  }
+
+  async getMyOrdersData(member, query) {
+    try {
+      const mb_id = shapeIntoMongooseObjectId(member._id),
+        order_status = query.status.toUpperCase(),
+        matches = { mb_id: mb_id, order_status: order_status };
+
+      const result = await this.ordermodel
+        .aggregate([
+          { $match: matches },
+          { $sort: { createdAt: -1 } },
+          {
+            $lookup: {
+              from: "orderitems",
+              localField: "_id",
+              foreignField: "order_id",
+              as: "order_items",
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "order_items.product_id",
+              foreignField: "_id",
+              as: "product_data",
+            },
+          },
+        ])
+        .exec();
+
+        console.log("result::", result);
+      assert.ok(result, Definer.order_err1);
+
+      return result;
+    } catch (err) {
+      throw err;
     }
   }
 }
