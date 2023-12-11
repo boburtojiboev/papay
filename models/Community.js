@@ -51,6 +51,7 @@ class Community {
               as: "member_data",
             },
           },
+          { $unwind: "$member_data"},
         ])
         .exec();
       assert.ok(result, Definer.article_err2);
