@@ -2,7 +2,7 @@ const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const { shapeIntoMongooseObjectId, lookup_auth_member_following } = require("../lib/config");
 const View = require("./View");
 
 class Member {
@@ -53,21 +53,23 @@ class Member {
 
   async getChosenMemberData(member, id) {
     try {
+      const auth_member = shapeIntoMongooseObjectId(member?._id);
       id = shapeIntoMongooseObjectId(id);
       console.log("member:::", member);
+
+      let aggregateQuery = [
+        { $match: { _id: id, mb_status: "ACTIVE" } },
+        { $unset: "mb_password" },
+      ];
 
       if (member) {
         // condition if not seem before
         await this.viewChosenItemByMember(member, id, "member");
+        // todo: check auth member liked the chosen target
+        aggregateQuery.push(lookup_auth_member_following(auth_member, "members"));
       }
 
-      const result = await this.memberModel
-        .aggregate([
-          { $match: { _id: id, mb_status: "ACTIVE" } },
-          { $unset: "mb_password" },
-          // todo: check auth member liked the chosen member
-        ])
-        .exec();
+      const result = await this.memberModel.aggregate(aggregateQuery).exec();
 
       assert.ok(result, Definer.general_err2);
       return result[0];
@@ -86,7 +88,7 @@ class Member {
       console.log("isValid:::", isValid);
       assert.ok(isValid, Definer.general_err2);
 
-      // logged use has seen target before
+      // logged user has seen target before
       const doesExist = await view.checkViewExistance(view_ref_id);
       console.log("doesExist:", doesExist);
 
