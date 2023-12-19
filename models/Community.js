@@ -30,7 +30,7 @@ class Community {
       return await article.save();
     } catch (mongo_err) {
       console.log(mongo_err);
-      throw new Error(Definer.auth_err1);
+      throw new Error(Definer.mongo_validation_err1);
     }
   }
 
@@ -113,11 +113,11 @@ class Community {
       art_id = shapeIntoMongooseObjectId(art_id);
 
       // increase art_views when user has not seem before
-      if(member) {
+      if (member) {
         const member_obj = new Member();
         await member_obj.viewChosenItemByMember(member, art_id, "community");
       }
-      
+
       const result = await this.boArticleModel.findById({ _id: art_id }).exec();
       assert.ok(result, Definer.article_err3);
 

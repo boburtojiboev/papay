@@ -2,8 +2,12 @@ const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
-const { shapeIntoMongooseObjectId, lookup_auth_member_following } = require("../lib/config");
+const {
+  shapeIntoMongooseObjectId,
+  lookup_auth_member_following,
+} = require("../lib/config");
 const View = require("./View");
+const Like = require("./Like");
 
 class Member {
   constructor() {
@@ -21,7 +25,7 @@ class Member {
         result = await new_member.save();
       } catch (mango_err) {
         console.log(mongo_err);
-        throw new Error(Definer.auth_err1);
+        throw new Error(Definer.mongo_validation_err1);
       }
       //   console.log(result);
       result.mb_password = "";
@@ -66,7 +70,9 @@ class Member {
         // condition if not seem before
         await this.viewChosenItemByMember(member, id, "member");
         // todo: check auth member liked the chosen target
-        aggregateQuery.push(lookup_auth_member_following(auth_member, "members"));
+        aggregateQuery.push(
+          lookup_auth_member_following(auth_member, "members")
+        );
       }
 
       const result = await this.memberModel.aggregate(aggregateQuery).exec();
@@ -97,6 +103,37 @@ class Member {
         assert.ok(result, Definer.general_err1);
       }
       return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async likeChosenItemByMember(member, like_ref_id, group_type) {
+    try {
+      like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
+      const mb_id = shapeIntoMongooseObjectId(member._id);
+
+      const like = new Like(mb_id);
+      const isValid = await like.validateTargetItem(like_ref_id, group_type);
+      // console.log("isValid:::", isValid);
+      assert.ok(isValid, Definer.general_err2);
+
+      // doesExist
+      const doesExist = await like.checkLikeExistence(like_ref_id);
+      console.log("doesExist:::", doesExist);
+
+      let data = doesExist
+        ? await like.removeMemberLike(like_ref_id, group_type)
+        : await like.insertMemberLike(like_ref_id, group_type);
+      assert.ok(data, Definer.general_err1);
+
+      const result = {
+        like_group: data.like_group,
+        like_ref_id: data.like_ref_id,
+        like_status: doesExist ? 0 : 1,
+      };
+
+      return result;
     } catch (err) {
       throw err;
     }
