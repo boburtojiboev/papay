@@ -1,5 +1,8 @@
 const assert = require("assert");
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const {
+  shapeIntoMongooseObjectId,
+  lookup_auth_member_liked,
+} = require("../lib/config");
 const ProductModel = require("../schema/product.model");
 const Definer = require("../lib/mistake");
 const Member = require("./Member");
@@ -32,7 +35,8 @@ class Product {
           { $sort: sort },
           { $skip: (data.page * 1 - 1) * data.limit },
           { $limit: data.limit * 1 },
-          // todo: check auth user product likes
+          //  check auth user product likes
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
 
@@ -50,7 +54,7 @@ class Product {
       const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       id = shapeIntoMongooseObjectId(id);
 
-      if(member) {
+      if (member) {
         const member_obj = new Member();
         await member_obj.viewChosenItemByMember(member, id, "product");
       }
@@ -58,7 +62,8 @@ class Product {
       const result = await this.productModel
         .aggregate([
           { $match: { _id: id, product_status: "PROCESS" } },
-          // todo: check auth user product likes
+          //  check auth user product likes
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
 
