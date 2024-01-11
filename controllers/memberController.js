@@ -129,10 +129,10 @@ memberController.updateMember = async (req, res) => {
   try {
     console.log("POST: cont/updateMember");
     assert.ok(req.member, Definer.auth_err3);
-    const data = req.body;
+    
     const member = new Member();
     const result = await member.updateMemberData(req.member?._id, req.body, req.file);
-    console.log("result;;;", result);
+    console.log("result:::", result);
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/updateMember, ${err.message}`);

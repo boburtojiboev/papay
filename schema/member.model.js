@@ -40,7 +40,7 @@ const memberSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    mb_discription: {
+    mb_description: {
         type: String,
         required: false
     },
